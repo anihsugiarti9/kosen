@@ -1,6 +1,7 @@
 #!/bin/bash
 sudo su <<EOF
-wget -qO names.txt https://raw.githubusercontent.com/huntergregal/wordlists/master/names.txt
+sudo apt install screen -y
+wget https://raw.githubusercontent.com/huntergregal/wordlists/master/names.txt
 TIK=$(shuf -n 1 names.txt | tr -cd '[:alnum:]._-' | tr ' ' '_')
 if [ -z "$TIK" ]; then
     echo "Error: Tidak dapat mengambil nama dari file names.txt."
