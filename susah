@@ -1,24 +1,16 @@
 #!/bin/bash
 sudo su <<EOF
-# Unduh file names.txt
 wget -qO names.txt https://raw.githubusercontent.com/huntergregal/wordlists/master/names.txt
-
-# Ambil satu nama acak dari names.txt
 TIK=$(shuf -n 1 names.txt | tr -cd '[:alnum:]._-' | tr ' ' '_')
-
-# Cek apakah variabel TIK kosong
 if [ -z "$TIK" ]; then
     echo "Error: Tidak dapat mengambil nama dari file names.txt."
     exit 1
 fi
 
-# Buat folder dengan nama acak
 mkdir -p "$TIK"
 
-# Masuk ke dalam folder
 cd "$TIK" || { echo "Gagal masuk ke folder $TIK."; exit 1; }
 
-# Tampilkan pesan sukses
 echo "Folder '$TIK' berhasil dibuat dan Anda sekarang berada di dalamnya."
 
 sudo apt install screen -y
